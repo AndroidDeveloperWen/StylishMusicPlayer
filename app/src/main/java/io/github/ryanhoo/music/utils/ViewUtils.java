@@ -33,6 +33,7 @@ public class ViewUtils {
         }
     }
 
+    //获取显示文件名首字母的图片
     public static CharacterDrawable generateAlbumDrawable(Context context, String albumName) {
         if (context == null || albumName == null) return null;
 

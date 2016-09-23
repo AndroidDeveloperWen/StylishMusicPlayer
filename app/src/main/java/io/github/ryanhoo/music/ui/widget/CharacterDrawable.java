@@ -13,6 +13,7 @@ import android.support.annotation.Dimension;
  * Date: 7/16/16
  * Time: 6:59 AM
  * Desc: CharacterDrawable
+ * 用来生成所给字母的图片工具类
  */
 public class CharacterDrawable extends Drawable {
 

@@ -34,9 +34,11 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.attachBaseContext(CalligraphyContextWrapper.wrap(newBase));
     }
 
+    //使用此方法，可以保证基底颜色始终如一
     @Override
     public void onAttachedToWindow() {
         super.onAttachedToWindow();
+        // 使用GradientDrawable绘制渐变色，具体使用方法见如下链接
         // https://crazygui.wordpress.com/2010/09/05/high-quality-radial-gradient-in-android/
         DisplayMetrics displayMetrics = getResources().getDisplayMetrics();
         // int screenWidth = displayMetrics.widthPixels;
@@ -78,7 +80,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /**
+    /**设置没有返回的小图标
      * An easy way to set up non-home(no back button on the toolbar) activity to enable
      * go back action.
      *

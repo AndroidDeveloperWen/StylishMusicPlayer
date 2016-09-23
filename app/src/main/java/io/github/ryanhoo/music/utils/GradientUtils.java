@@ -10,6 +10,7 @@ import android.support.annotation.FloatRange;
  * Date: 9/1/16
  * Time: 10:13 PM
  * Desc: GradientUtils
+ * 使用GradientDrawable实现渐变色效果的工具类
  */
 public class GradientUtils {
 

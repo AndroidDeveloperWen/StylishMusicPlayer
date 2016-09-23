@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
+
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.data.model.PlayList;
 import io.github.ryanhoo.music.ui.common.AbstractFooterAdapter;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -30,6 +31,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
     public PlayListAdapter(Context context, List<PlayList> data) {
         super(context, data);
         mContext = context;
+        //对数据更新进行监听，数据变化后在底部显示List的数据
         registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -48,6 +50,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
         final RecyclerView.ViewHolder holder = super.onCreateViewHolder(parent, viewType);
         if (holder.itemView instanceof PlayListItemView) {
             final PlayListItemView itemView = (PlayListItemView) holder.itemView;
+            //点击右边按钮进行进一步操作
             itemView.buttonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -61,7 +64,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
         return holder;
     }
 
-    // Footer View
+    // Footer View，设置add play list底部View
 
     @Override
     protected boolean isFooterEnabled() {
@@ -73,6 +76,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
         if (mFooterView == null) {
             mFooterView = View.inflate(mContext, R.layout.item_play_list_footer, null);
             View layoutAddPlayList = mFooterView.findViewById(R.id.layout_add_play_list);
+            //点击添加新的List
             layoutAddPlayList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
