@@ -18,6 +18,11 @@ import io.github.ryanhoo.music.ui.common.AbstractFooterAdapter;
  * Date: 9/9/16
  * Time: 10:16 PM
  * Desc: PlayListAdapter
+ *
+ * 在父类ListAdapter中设置长按和点击事件，并且通过createView绑定Item，在子类中重写createView方法中绑定具体的itemView,
+ * 在AbstractFooterAdapter设置FootView的位置，在子类createFooterView方法中具体实现
+ * 设置回调接口AddPlayListCallback，在PlayListFragment实现具体的操作
+ *
  */
 public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListItemView> {
 
@@ -31,7 +36,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
     public PlayListAdapter(Context context, List<PlayList> data) {
         super(context, data);
         mContext = context;
-        //对数据更新进行监听，数据变化后在底部显示List的数据
+        //对数据更新进行监听，数据变化后在底部更新显示List的数量
         registerAdapterDataObserver(new RecyclerView.AdapterDataObserver() {
             @Override
             public void onChanged() {
@@ -48,6 +53,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         final RecyclerView.ViewHolder holder = super.onCreateViewHolder(parent, viewType);
+        //Play
         if (holder.itemView instanceof PlayListItemView) {
             final PlayListItemView itemView = (PlayListItemView) holder.itemView;
             //点击右边按钮进行进一步操作
@@ -76,7 +82,7 @@ public class PlayListAdapter extends AbstractFooterAdapter<PlayList, PlayListIte
         if (mFooterView == null) {
             mFooterView = View.inflate(mContext, R.layout.item_play_list_footer, null);
             View layoutAddPlayList = mFooterView.findViewById(R.id.layout_add_play_list);
-            //点击添加新的List
+            //点击添加新的List,通过回调在PlayListFragment中进行操作
             layoutAddPlayList.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

@@ -18,6 +18,9 @@ import io.github.ryanhoo.music.utils.ViewUtils;
  * Date: 9/9/16
  * Time: 10:03 PM
  * Desc: PlayListItemView
+ *
+ *此类是PlayList的ItemView，写成类的形式，方便随时调用，做到了解耦，避免了代码臃肿
+ * 参考http://blog.csdn.net/kroclin/article/details/41830315
  */
 public class PlayListItemView extends RelativeLayout implements IAdapterView<PlayList> {
 

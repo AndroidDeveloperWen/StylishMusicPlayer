@@ -11,6 +11,7 @@ import android.view.WindowManager;
  * Date: 9/14/16
  * Time: 2:03 AM
  * Desc: BaseDialogFragment
+ * 设置Dialog的大小
  */
 public class BaseDialogFragment extends DialogFragment {
 

@@ -4,10 +4,11 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
-import io.github.ryanhoo.music.ui.base.adapter.IAdapterView;
-import io.github.ryanhoo.music.ui.base.adapter.ListAdapter;
 
 import java.util.List;
+
+import io.github.ryanhoo.music.ui.base.adapter.IAdapterView;
+import io.github.ryanhoo.music.ui.base.adapter.ListAdapter;
 
 /**
  * Created with Android Studio.
@@ -15,6 +16,7 @@ import java.util.List;
  * Date: 9/3/16
  * Time: 10:32 PM
  * Desc: AbstractFooterAdapter
+ * 此类用来设置Adapter中的footView，可以重用
  */
 public abstract class AbstractFooterAdapter<T, V extends IAdapterView> extends ListAdapter<T, V> {
 
@@ -54,6 +56,7 @@ public abstract class AbstractFooterAdapter<T, V extends IAdapterView> extends L
         }
     }
 
+    //获取ItemView的类型，假如允许存在footView，并且是最后一个位置，则返回footView类型
     @Override
     public int getItemViewType(int position) {
         if (isFooterEnabled() && position == getItemCount() - 1) {
@@ -62,6 +65,7 @@ public abstract class AbstractFooterAdapter<T, V extends IAdapterView> extends L
         return VIEW_TYPE_ITEM;
     }
 
+    //假如允许存在footView，则总Item的数量加1
     @Override
     public int getItemCount() {
         int itemCount = super.getItemCount();

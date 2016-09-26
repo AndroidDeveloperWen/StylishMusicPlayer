@@ -6,7 +6,9 @@ package io.github.ryanhoo.music.ui.base.adapter;
  * Date: 7/11/16
  * Time: 11:43 AM
  * Desc: Reusable list item view.
+ * 分离adapter的getView方法代码，具体可以见下链接
  * - http://blog.csdn.net/kroclin/article/details/41830315
+ *
  */
 public interface IAdapterView<T> {
 

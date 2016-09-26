@@ -67,10 +67,12 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                //进入文件夹详情页面
                 PlayList playList = mAdapter.getItem(position);
                 startActivity(PlayListDetailsActivity.launchIntentForPlayList(getActivity(), playList));
             }
         });
+        //设置添加新List以及更多操作的回调
         mAdapter.setAddPlayListCallback(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DefaultDividerDecoration());
@@ -142,13 +144,14 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
         mPresenter.loadPlayLists();
     }
 
-    // Adapter Callbacks
+    // Adapter Callbacks，PlayListAdapter.AddPlayListCallback回调,点击ItemView右边的button按钮进行操作
 
     @Override
     public void onAction(View actionView, final int position) {
         final PlayList playList = mAdapter.getItem(position);
         PopupMenu actionMenu = new PopupMenu(getActivity(), actionView, Gravity.END | Gravity.BOTTOM);
         actionMenu.inflate(R.menu.play_list_action);
+        //假如是favourite这个item，则只显示一个play操作选项
         if (playList.isFavorite()) {
             actionMenu.getMenu().findItem(R.id.menu_item_rename).setVisible(false);
             actionMenu.getMenu().findItem(R.id.menu_item_delete).setVisible(false);
@@ -156,10 +159,12 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
         actionMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
+                //播放音乐，事件分发到MusicPlayerFragment进行处理
                 if (item.getItemId() == R.id.menu_item_play_now) {
                     PlayListNowEvent playListNowEvent = new PlayListNowEvent(playList, 0);
                     RxBus.getInstance().post(playListNowEvent);
                 } else if (item.getItemId() == R.id.menu_item_rename) {
+                    //重命名，通过回调来进行操作
                     mEditIndex = position;
                     EditPlayListDialogFragment.editPlayList(playList)
                             .setCallback(PlayListFragment.this)
@@ -173,7 +178,7 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
         });
         actionMenu.show();
     }
-
+    //PlayListAdapter.AddPlayListCallback回调,添加PlayList
     @Override
     public void onAddPlayList() {
         EditPlayListDialogFragment.createPlayList()
@@ -181,7 +186,8 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
                 .show(getFragmentManager().beginTransaction(), "CreatePlayList");
     }
 
-    // Create or Edit Play List Callbacks
+    // Create or Edit Play List Callbacks，
+    // EditPlayListDialogFragment.Callback,用来创建新的PlayList和修改PlayList的名字
 
     @Override
     public void onCreated(final PlayList playList) {
@@ -193,7 +199,9 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
         mPresenter.editPlayList(playList);
     }
 
-    // MVP View
+
+    // MVP View，通过PlayListPresenter进行对数据的操作，然后针对成功或者失败的情况，
+    // 在PlayListPresenter中调用PlayListFragment中方法来更新View
 
     @Override
     public void showLoading() {

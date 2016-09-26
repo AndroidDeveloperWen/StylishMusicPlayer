@@ -13,6 +13,7 @@ import java.util.List;
  * Date: 7/11/16
  * Time: 11:45 AM
  * Desc: ListAdapter
+ * 实现了点击和长按的事件接口，绑定通过createView方法获取的ItemView，在具体实现类中完成createView来获取具体的ItemView
  */
 public abstract class ListAdapter<T, V extends IAdapterView> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
