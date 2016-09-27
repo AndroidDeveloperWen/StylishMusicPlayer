@@ -76,7 +76,7 @@ public class PlayListFragment extends BaseFragment implements PlayListContract.V
         mAdapter.setAddPlayListCallback(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DefaultDividerDecoration());
-
+        //一开始就加载PlayList
         new PlayListPresenter(AppRepository.getInstance(), this).subscribe();
     }
 

@@ -4,12 +4,23 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import com.litesuits.orm.db.annotation.*;
+
+import com.litesuits.orm.db.annotation.Column;
+import com.litesuits.orm.db.annotation.Ignore;
+import com.litesuits.orm.db.annotation.MapCollection;
+import com.litesuits.orm.db.annotation.Mapping;
+import com.litesuits.orm.db.annotation.PrimaryKey;
+import com.litesuits.orm.db.annotation.Table;
 import com.litesuits.orm.db.enums.AssignType;
 import com.litesuits.orm.db.enums.Relation;
-import io.github.ryanhoo.music.player.PlayMode;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
+
+import io.github.ryanhoo.music.player.PlayMode;
 
 /**
  * Created with Android Studio.
@@ -17,6 +28,7 @@ import java.util.*;
  * Date: 9/5/16
  * Time: 5:53 PM
  * Desc: PlayList
+ * 实现序列化，具体见http://www.cnblogs.com/renqingping/archive/2012/10/25/Parcelable.html
  */
 @Table("playlist")
 public class PlayList implements Parcelable {

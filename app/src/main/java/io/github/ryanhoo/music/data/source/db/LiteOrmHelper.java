@@ -10,6 +10,7 @@ import io.github.ryanhoo.music.Injection;
  * Date: 9/10/16
  * Time: 4:00 PM
  * Desc: LiteOrmHelper
+ * LiteOrm工具类，使用Cascade实例，将会无限级联操作（不会死循环），将所有与这个Model相关的实体、关系都保存下来
  */
 public class LiteOrmHelper {
 

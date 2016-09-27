@@ -1,5 +1,8 @@
 package io.github.ryanhoo.music.data.source;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import io.github.ryanhoo.music.Injection;
 import io.github.ryanhoo.music.data.model.Folder;
 import io.github.ryanhoo.music.data.model.PlayList;
@@ -8,15 +11,14 @@ import io.github.ryanhoo.music.data.source.db.LiteOrmHelper;
 import rx.Observable;
 import rx.functions.Action1;
 
-import java.util.ArrayList;
-import java.util.List;
-
 /**
  * Created with Android Studio.
  * User: ryan.hoo.j@gmail.com
  * Date: 9/10/16
  * Time: 4:17 PM
  * Desc: AppRepository
+ * 中转站的作用，实际是从AppLocalDataSource获取Observable，然后传递给PlayListPresenter
+ * 同时对缓存已有的PlayList
  */
 public class AppRepository implements AppContract {
 
@@ -103,6 +105,9 @@ public class AppRepository implements AppContract {
     public Observable<Folder> delete(Folder folder) {
         return mLocalDataSource.delete(folder);
     }
+
+
+    // Song
 
     @Override
     public Observable<List<Song>> insert(List<Song> songs) {

@@ -15,6 +15,10 @@ import rx.subjects.PublishSubject;
  * - Be very careful when error occurred here, this can terminate the whole
  * event observer pattern. If one error ever happened, new events won't be
  * received because this subscription has be terminated after onError(Throwable).
+ *
+ * 基于RxJava的RxBus。具体可以参考http://www.jianshu.com/p/ca090f6e2fe2
+ * 需要注意的是，一旦出现error，新的event将不会被接受，因为在上次对此event的onError处理中解除了订阅关系，
+ * 具体解决方案见下连接：http://www.jianshu.com/p/0493cc28a811
  */
 
 public class RxBus {

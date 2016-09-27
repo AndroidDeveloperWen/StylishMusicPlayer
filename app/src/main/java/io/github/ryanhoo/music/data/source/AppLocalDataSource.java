@@ -2,18 +2,20 @@ package io.github.ryanhoo.music.data.source;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.QueryBuilder;
 import com.litesuits.orm.db.model.ConflictAlgorithm;
+
+import java.util.Date;
+import java.util.List;
+
 import io.github.ryanhoo.music.data.model.Folder;
 import io.github.ryanhoo.music.data.model.PlayList;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.utils.DBUtils;
 import rx.Observable;
 import rx.Subscriber;
-
-import java.util.Date;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -22,7 +24,8 @@ import java.util.List;
  * Time: 4:54 PM
  * Desc: AppLocalDataSource
  */
-/* package */ class AppLocalDataSource implements AppContract {
+/* package */
+class AppLocalDataSource implements AppContract {
 
     private static final String TAG = "AppLocalDataSource";
 
@@ -210,6 +213,8 @@ import java.util.List;
             }
         });
     }
+
+    // Song
 
     @Override
     public Observable<List<Song>> insert(final List<Song> songs) {
