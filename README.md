@@ -6,6 +6,12 @@
 
 ![Artboard](materials/Artboard.png)
 
+## 结构分析
+![MusicPlayerFragment](https://github.com/JerryMissTom/StylishMusicPlayer/blob/develop/MusicPlayer%20(1).png)
+
+
+
+
 ## Acknowledgements
 
 Thanks to these projects and libraries:
