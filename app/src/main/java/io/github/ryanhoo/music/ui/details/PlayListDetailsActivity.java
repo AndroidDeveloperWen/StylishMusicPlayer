@@ -83,6 +83,7 @@ public class PlayListDetailsActivity extends BaseActivity implements PlayListDet
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
+                //点击播放音乐，发送播放事件
                 RxBus.getInstance().post(new PlayListNowEvent(mPlayList, position));
             }
         });
@@ -111,7 +112,7 @@ public class PlayListDetailsActivity extends BaseActivity implements PlayListDet
         return intent;
     }
 
-    // Adapter Action Callback
+    // Adapter Action Callback，把歌曲添加到其他play list，删除歌曲
 
     @Override
     public void onAction(View actionView, final int position) {
@@ -145,7 +146,8 @@ public class PlayListDetailsActivity extends BaseActivity implements PlayListDet
         actionMenu.show();
     }
 
-    // MVP View
+    // MVP View 通过PlayListDetailsPresenter进行对数据的操作，然后针对成功或者失败的情况，
+    // 在PlayListDetailsPresenter中调用PlayListDetailsActivity中方法来更新View
 
     @Override
     public void showLoading() {

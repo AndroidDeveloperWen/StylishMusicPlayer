@@ -102,6 +102,7 @@ public class PlayListDetailsPresenter implements PlayListDetailsContract.Present
                     @Override
                     public void onNext(PlayList playList) {
                         mView.onSongDeleted(song);
+                        //发送消息，更新List中的歌曲数量
                         RxBus.getInstance().post(new PlayListUpdatedEvent(playList));
                     }
                 });

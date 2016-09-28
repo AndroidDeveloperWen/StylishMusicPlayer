@@ -4,11 +4,12 @@ import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.List;
+
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.ui.common.AbstractSummaryAdapter;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -35,6 +36,7 @@ public class SongAdapter extends AbstractSummaryAdapter<Song, SongItemView> {
             itemView.buttonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    //回调，在PlayListetailsActivity中写具体实现
                     int position = holder.getAdapterPosition();
                     if (mCallback != null) {
                         mCallback.onAction(v, position);
@@ -50,12 +52,13 @@ public class SongAdapter extends AbstractSummaryAdapter<Song, SongItemView> {
         return mContext.getString(R.string.mp_play_list_details_footer_end_summary_formatter, dataCount);
     }
 
+    //添加ItemView
     @Override
     protected SongItemView createView(Context context) {
         return new SongItemView(context);
     }
 
-    // Callback
+    // Callback，设置回调
 
     public void setActionCallback(ActionCallback callback) {
         mCallback = callback;

@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
+
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.ui.base.adapter.IAdapterView;
 import io.github.ryanhoo.music.ui.base.adapter.ListAdapter;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -42,7 +43,7 @@ public abstract class AbstractSummaryAdapter<T, V extends IAdapterView> extends 
     }
 
     /**
-     * End summary text
+     * End summary text，绘制footView
      */
     protected abstract String getEndSummaryText(int dataCount);
 
@@ -79,6 +80,7 @@ public abstract class AbstractSummaryAdapter<T, V extends IAdapterView> extends 
         }
     }
 
+    //获取ItemView的类型
     @Override
     public int getItemViewType(int position) {
         if (hasEndSummary && position == getItemCount() - 1) {
@@ -86,7 +88,7 @@ public abstract class AbstractSummaryAdapter<T, V extends IAdapterView> extends 
         }
         return VIEW_TYPE_ITEM;
     }
-
+    //决定是否存在汇总信息的footView，若歌曲数大于1，则显示
     @Override
     public int getItemCount() {
         int itemCount = super.getItemCount();
