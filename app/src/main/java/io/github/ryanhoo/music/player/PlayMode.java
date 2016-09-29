@@ -6,6 +6,7 @@ package io.github.ryanhoo.music.player;
  * Date: 9/5/16
  * Time: 5:48 PM
  * Desc: PlayMode
+ * 播放模式的切换
  */
 public enum PlayMode {
     SINGLE,

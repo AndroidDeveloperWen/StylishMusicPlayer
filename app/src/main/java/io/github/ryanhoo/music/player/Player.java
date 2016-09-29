@@ -3,12 +3,13 @@ package io.github.ryanhoo.music.player;
 import android.media.MediaPlayer;
 import android.support.annotation.Nullable;
 import android.util.Log;
-import io.github.ryanhoo.music.data.model.PlayList;
-import io.github.ryanhoo.music.data.model.Song;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import io.github.ryanhoo.music.data.model.PlayList;
+import io.github.ryanhoo.music.data.model.Song;
 
 /**
  * Created with Android Studio.
@@ -231,6 +232,8 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener {
     public void removeCallbacks() {
         mCallbacks.clear();
     }
+
+    //Player控制歌曲暂停，上一首，下一首，会用回调同时在MusicPlayerFragment和PlaybackService更新界面
 
     private void notifyPlayStatusChanged(boolean isPlaying) {
         for (Callback callback : mCallbacks) {

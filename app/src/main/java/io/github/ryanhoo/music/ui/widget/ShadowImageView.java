@@ -21,6 +21,7 @@ import android.widget.ImageView;
  * Desc: ShadowImageView
  * Stole from {@link android.support.v4.widget.SwipeRefreshLayout}'s implementation to display beautiful shadow
  * for circle ImageView.
+ * 具有转动效果的图片
  */
 public class ShadowImageView extends ImageView {
 

@@ -10,6 +10,7 @@ import android.view.View;
  * Date: 9/2/16
  * Time: 6:15 PM
  * Desc: DefaultListItemDecoration
+ * recyleview的分割线高度
  */
 public class DefaultDividerDecoration extends RecyclerView.ItemDecoration {
 

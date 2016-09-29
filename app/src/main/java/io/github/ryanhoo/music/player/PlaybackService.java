@@ -48,6 +48,7 @@ public class PlaybackService extends Service implements IPlayback, IPlayback.Cal
     public void onCreate() {
         super.onCreate();
         mPlayer = Player.getInstance();
+        //添加至mCallbacks，音乐控制的时候会被通知到
         mPlayer.registerCallback(this);
     }
 
@@ -179,7 +180,8 @@ public class PlaybackService extends Service implements IPlayback, IPlayback.Cal
         super.onDestroy();
     }
 
-    // Playback Callbacks
+    // Playback Callbacks，点击上一首，下一首，暂定等操作，会发送PendingIntent
+    // 然后在Player中执行控制操作，通过IPlayback.Callback回调来调整界面，也会通过回调改变MusicPlayerFragment的控制界面
 
     @Override
     public void onSwitchLast(@Nullable Song last) {
@@ -248,7 +250,7 @@ public class PlaybackService extends Service implements IPlayback, IPlayback.Cal
         remoteView.setImageViewResource(R.id.image_view_close, R.drawable.ic_remote_view_close);
         remoteView.setImageViewResource(R.id.image_view_play_last, R.drawable.ic_remote_view_play_last);
         remoteView.setImageViewResource(R.id.image_view_play_next, R.drawable.ic_remote_view_play_next);
-
+        //发送意图，在onStartCommand执行
         remoteView.setOnClickPendingIntent(R.id.button_close, getPendingIntent(ACTION_STOP_SERVICE));
         remoteView.setOnClickPendingIntent(R.id.button_play_last, getPendingIntent(ACTION_PLAY_LAST));
         remoteView.setOnClickPendingIntent(R.id.button_play_next, getPendingIntent(ACTION_PLAY_NEXT));

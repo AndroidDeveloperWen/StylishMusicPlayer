@@ -80,7 +80,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         @Override
         public void run() {
             if (isDetached()) return;
-
+            //每秒更新进度条
             if (mPlayer.isPlaying()) {
                 int progress = (int) (seekBarProgress.getMax()
                         * ((float) mPlayer.getProgress() / (float) getCurrentSongDuration()));
@@ -112,17 +112,20 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 if (fromUser) {
+                    //手动滑动更新播放时长
                     updateProgressTextWithProgress(progress);
                 }
             }
 
             @Override
             public void onStartTrackingTouch(SeekBar seekBar) {
+                //开始滑动
                 mHandler.removeCallbacks(mProgressCallback);
             }
 
             @Override
             public void onStopTrackingTouch(SeekBar seekBar) {
+                //结束滑动，歌曲跳转到对应位置播放
                 seekTo(getDuration(seekBar.getProgress()));
                 if (mPlayer.isPlaying()) {
                     mHandler.removeCallbacks(mProgressCallback);
@@ -130,7 +133,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
                 }
             }
         });
-
+       //通过MusicPlayerPresenter.subscribe()，然后调用bindPlaybackService与MusicPlayerService绑定，接收service的信息,然后更新界面
         new MusicPlayerPresenter(getActivity(), AppRepository.getInstance(), this).subscribe();
     }
 
@@ -155,7 +158,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         super.onDestroyView();
     }
 
-    // Click Events
+    // Click Events，各按钮点击事件
 
     @OnClick(R.id.button_play_toggle)
     public void onPlayToggleAction(View view) {
@@ -204,7 +207,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         }
     }
 
-    // RXBus Events
+    // RXBus Events，接受播放音乐和播放歌单事件，在Play List和Local File中触发
 
     @Override
     protected Subscription subscribeEvents() {
@@ -234,7 +237,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         playSong(playList, playIndex);
     }
 
-    // Music Controls
+    // Music Controls，播放歌曲的界面更新
 
     private void playSong(Song song) {
         PlayList playList = new PlayList(song);
@@ -298,7 +301,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         return duration;
     }
 
-    // Player Callbacks
+    // Player Callbacks，在Player中执行上一首或者下一首等操作，通过IPlayback.Callback回调进行界面的更新操作
 
     @Override
     public void onSwitchLast(Song last) {
@@ -328,7 +331,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
         }
     }
 
-    // MVP View
+    // MVP View，设置favourite，播放模式等操作对数据处理后界面变化，具体对数据的处理在MusicPlayerPresenter中实现
 
     @Override
     public void handleError(Throwable error) {
@@ -338,6 +341,7 @@ public class MusicPlayerFragment extends BaseFragment implements MusicPlayerCont
     @Override
     public void onPlaybackServiceBound(PlaybackService service) {
         mPlayer = service;
+        //通过PlaybackService.registerCallback(Callback)，然后调用Player.registerCallback(Callbback)把MusicPlayerFragment添加至mCallbacks
         mPlayer.registerCallback(this);
     }
 
