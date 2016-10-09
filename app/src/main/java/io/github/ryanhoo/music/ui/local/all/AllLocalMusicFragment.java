@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -23,8 +26,6 @@ import io.github.ryanhoo.music.ui.widget.RecyclerViewFastScroller;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -63,6 +64,7 @@ public class AllLocalMusicFragment extends BaseFragment implements LocalMusicCon
             @Override
             public void onItemClick(int position) {
                 Song song = mAdapter.getItem(position);
+                //点击发送播放事件
                 RxBus.getInstance().post(new PlaySongEvent(song));
             }
         });

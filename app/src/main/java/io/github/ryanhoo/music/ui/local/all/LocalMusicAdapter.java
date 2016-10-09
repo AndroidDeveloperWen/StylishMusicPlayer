@@ -1,12 +1,13 @@
 package io.github.ryanhoo.music.ui.local.all;
 
 import android.content.Context;
+
+import java.util.List;
+
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.ui.common.AbstractSummaryAdapter;
 import io.github.ryanhoo.music.ui.widget.RecyclerViewFastScroller;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -35,6 +36,7 @@ public class LocalMusicAdapter extends AbstractSummaryAdapter<Song, LocalMusicIt
         return new LocalMusicItemView(context);
     }
 
+    //显示快速滑动所在item位置的首字母
     @Override
     public String getTextToShowInBubble(int position) {
         Song item = getItem(position);
