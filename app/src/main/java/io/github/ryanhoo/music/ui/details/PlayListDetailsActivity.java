@@ -167,11 +167,8 @@ public class PlayListDetailsActivity extends BaseActivity implements PlayListDet
     @Override
     public void onSongDeleted(Song song) {
         mAdapter.notifyItemRemoved(mDeleteIndex);
-<<<<<<< HEAD
-  //      mAdapter.notifyItemRemoved(mDeleteIndex);
-=======
         mAdapter.updateSummaryText();
->>>>>>> ryanhoo/develop
+
     }
 
     @Override
