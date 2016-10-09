@@ -5,9 +5,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
-import android.view.*;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ProgressBar;
 import android.widget.Toast;
+
+import java.io.File;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -27,9 +35,6 @@ import io.github.ryanhoo.music.ui.playlist.EditPlayListDialogFragment;
 import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
-
-import java.io.File;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -74,7 +79,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
         mAdapter.setAddFolderCallback(this);
         recyclerView.setAdapter(mAdapter);
         recyclerView.addItemDecoration(new DefaultDividerDecoration());
-
+        //执行subscribe()会第一时间loadFolder
         new FolderPresenter(AppRepository.getInstance(), this).subscribe();
     }
 
@@ -107,7 +112,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
         mPresenter.addFolders(folders, existedFolders);
     }
 
-    // Adapter Callbacks
+    // Adapter Callbacks，处理add to play list,create play list,refresh,delete等操作
 
     @Override
     public void onAction(View actionView, final int position) {
@@ -119,6 +124,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
                     case R.id.menu_item_add_to_play_list:
+                        //通过AddToPlayListDialogFragment.Callback()回调在此fragment处理
                         new AddToPlayListDialogFragment()
                                 .setCallback(new AddToPlayListDialogFragment.Callback() {
                                     @Override
@@ -129,6 +135,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
                                 .show(getFragmentManager().beginTransaction(), "AddToPlayList");
                         break;
                     case R.id.menu_item_create_play_list:
+                        //回调处理
                         PlayList playList = PlayList.fromFolder(folder);
                         EditPlayListDialogFragment.editPlayList(playList)
                                 .setCallback(new EditPlayListDialogFragment.Callback() {
@@ -161,6 +168,7 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
 
     @Override
     public void onAddFolder() {
+        //进入系统目录
         startActivity(new Intent(getActivity(), FileSystemActivity.class));
     }
 

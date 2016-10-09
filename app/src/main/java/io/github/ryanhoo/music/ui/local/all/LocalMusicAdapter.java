@@ -15,6 +15,7 @@ import io.github.ryanhoo.music.ui.widget.RecyclerViewFastScroller;
  * Date: 9/2/16
  * Time: 8:21 PM
  * Desc: LocalMusicAdapter
+ * 复用AbstractSummaryAdapter，和PlayList中的一样的footView
  */
 public class LocalMusicAdapter extends AbstractSummaryAdapter<Song, LocalMusicItemView>
         implements RecyclerViewFastScroller.BubbleTextGetter {

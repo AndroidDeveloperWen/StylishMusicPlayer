@@ -5,11 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import java.util.List;
+
 import io.github.ryanhoo.music.R;
 import io.github.ryanhoo.music.data.model.Folder;
 import io.github.ryanhoo.music.ui.common.AbstractFooterAdapter;
-
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -48,6 +49,7 @@ public class FolderAdapter extends AbstractFooterAdapter<Folder, FolderItemView>
         final RecyclerView.ViewHolder holder = super.onCreateViewHolder(parent, viewType);
         if (holder.itemView instanceof FolderItemView) {
             final FolderItemView itemView = (FolderItemView) holder.itemView;
+            //点击事件在FolderFragment中回调处理
             itemView.buttonAction.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -61,7 +63,7 @@ public class FolderAdapter extends AbstractFooterAdapter<Folder, FolderItemView>
         return holder;
     }
 
-    // Footer View
+    // Footer View，如果isFooterEnabled()为true，则显示footView，具体判断逻辑在父类AbstractFooterAdapter中
 
     @Override
     protected boolean isFooterEnabled() {
@@ -87,6 +89,7 @@ public class FolderAdapter extends AbstractFooterAdapter<Folder, FolderItemView>
         return mFooterView;
     }
 
+    //更新footView
     public void updateFooterView() {
         if (textViewSummary == null) return;
 

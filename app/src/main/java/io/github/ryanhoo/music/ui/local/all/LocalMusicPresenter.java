@@ -8,6 +8,13 @@ import android.support.v4.app.LoaderManager;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.Loader;
 import android.util.Log;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import io.github.ryanhoo.music.data.model.Song;
 import io.github.ryanhoo.music.data.source.AppRepository;
 import io.github.ryanhoo.music.utils.FileUtils;
@@ -19,12 +26,6 @@ import rx.functions.Action1;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 import rx.subscriptions.CompositeSubscription;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 /**
  * Created with Android Studio.
@@ -42,6 +43,7 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
     private static final String WHERE = MediaStore.Audio.Media.IS_MUSIC + "=1 AND "
             + MediaStore.Audio.Media.SIZE + ">0";
     private static final String ORDER_BY = MediaStore.Audio.Media.DISPLAY_NAME + " ASC";
+    //歌曲的属性
     private static String[] PROJECTIONS = {
             MediaStore.Audio.Media.DATA, // the real path
             MediaStore.Audio.Media.TITLE,
@@ -81,9 +83,11 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
     @Override
     public void loadLocalMusic() {
         mView.showProgress();
+        //如果标志loader的ID不存在，initLoader()会激发LoaderManager.LoaderCallbacks的方法onCreateLoader()创建新的Loader，典型的例子是CursorLoader。
+        //intiLoader()会返回一个创建的loader，但是你不需要来获取它的引用。LoadeManager会自动管理loader的生命周期
         mView.getLoaderManager().initLoader(URL_LOAD_LOCAL_MUSIC, null, this);
     }
-
+//这里使用的是Android的Loaders机制，具体可以参考http://blog.csdn.net/guoshaobei/article/details/17451647
     @Override
     public Loader<Cursor> onCreateLoader(int id, Bundle args) {
         if (id != URL_LOAD_LOCAL_MUSIC) return null;
@@ -98,6 +102,7 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
         );
     }
 
+    //通过Loaders获取数据后，对数据进行处理，转化为Song
     @Override
     public void onLoadFinished(Loader<Cursor> loader, Cursor cursor) {
         Subscription subscription = Observable.just(cursor)
@@ -149,6 +154,7 @@ public class LocalMusicPresenter implements LocalMusicContract.Presenter, Loader
 
                     @Override
                     public void onNext(List<Song> songs) {
+                        //更新界面
                         mView.onLocalMusicLoaded(songs);
                         mView.emptyView(songs.isEmpty());
                     }
