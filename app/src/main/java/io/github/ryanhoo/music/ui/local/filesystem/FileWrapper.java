@@ -8,6 +8,7 @@ import java.io.File;
  * Date: 9/4/16
  * Time: 6:10 PM
  * Desc: SystemFile
+ * 封装类，包含文件夹名字及是否被选中，默认未选中
  */
 public class FileWrapper {
 

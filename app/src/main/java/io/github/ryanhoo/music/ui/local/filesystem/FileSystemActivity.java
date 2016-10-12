@@ -9,6 +9,14 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import io.github.ryanhoo.music.R;
@@ -24,9 +32,6 @@ import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 import rx.schedulers.Schedulers;
-
-import java.io.File;
-import java.util.*;
 
 /**
  * Created with Android Studio.
@@ -69,6 +74,7 @@ public class FileSystemActivity extends BaseActivity {
 
         mFileTreeStack = new FileTreeStack();
         mAdapter = new FileSystemAdapter(this, null);
+        //点击，判断是否处于ActionMode状态，假如是，则选中或者取消，更新title。假如是文件夹，进入内部
         mAdapter.setOnItemClickListener(new OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
@@ -78,6 +84,7 @@ public class FileSystemActivity extends BaseActivity {
                 } else {
                     File file = fileWrapper.file;
                     if (file.isDirectory()) {
+                        //把父文件夹加入堆栈，
                         storeSnapshot();
                         toolbar.setTitle(getToolbarTitle(file));
                         loadFiles(file);
@@ -85,14 +92,17 @@ public class FileSystemActivity extends BaseActivity {
                 }
             }
         });
+        //长按，判断是否是文件，是则无响应，否的话，判断是否处于选择模式，否，则进入选择模式。
         mAdapter.setOnItemLongClickListener(new OnItemLongClickListener() {
             @Override
             public void onItemClick(int position) {
                 FileWrapper fileWrapper = mAdapter.getItem(position);
                 if (fileWrapper.file.isDirectory()) {
                     if (mActionModeCallback == null || !mActionModeCallback.isShowing()) {
+                        //开启选择模式
                         startActionMode();
                     }
+                    //更新ActionMode选中的文件数，长按也会对当前状态进行取反操作
                     toggleItemView(fileWrapper, position, !fileWrapper.selected);
                 }
             }
@@ -141,6 +151,7 @@ public class FileSystemActivity extends BaseActivity {
         mFileTreeStack.push(snapshot);
     }
 
+        //退出此文件夹，回到上级文件夹，并回到当初的位置
     private void restoreSnapshot(FileTreeStack.FileTreeSnapshot snapshot) {
         final File parent = snapshot.parent;
         final List<FileWrapper> files = snapshot.files;
@@ -171,6 +182,7 @@ public class FileSystemActivity extends BaseActivity {
                     @Override
                     public Observable<List<FileWrapper>> call(File parent) {
                         List<File> files = Arrays.asList(parent.listFiles(SystemFileFilter.DEFAULT_INSTANCE));
+                        //文件排序，文件夹排在文件前
                         Collections.sort(files, new Comparator<File>() {
                             @Override
                             public int compare(File f1, File f2) {
@@ -183,7 +195,7 @@ public class FileSystemActivity extends BaseActivity {
                                 return f1.getName().compareToIgnoreCase(f2.getName());
                             }
                         });
-                        // Wrap files
+                        // Wrap files，把文件夹封装成FileWrapper
                         List<FileWrapper> fileWrappers = new ArrayList<>(files.size());
                         for (File file : files) {
                             fileWrappers.add(new FileWrapper(file));
@@ -196,6 +208,7 @@ public class FileSystemActivity extends BaseActivity {
                 .subscribe(new Subscriber<List<FileWrapper>>() {
                     @Override
                     public void onCompleted() {
+                        //显示无文件夹的提示
                         toggleEmptyViewVisibility();
                     }
 
@@ -206,6 +219,7 @@ public class FileSystemActivity extends BaseActivity {
 
                     @Override
                     public void onNext(List<FileWrapper> files) {
+                        //文件夹封装完毕后，刷新adapter
                         onFilesLoaded(parent, files);
                     }
                 });
@@ -230,6 +244,7 @@ public class FileSystemActivity extends BaseActivity {
         return mActionModeCallback != null && mActionModeCallback.isShowing();
     }
 
+    //建立新的ActionMode，在回调中处理具体操作
     private void startActionMode() {
         if (mActionModeCallback == null) {
             mActionModeCallback = new ActionModeCallback(this, new ActionModeCallback.ActionListener() {
@@ -254,6 +269,7 @@ public class FileSystemActivity extends BaseActivity {
         mActionModeCallback.setShowing(true);
     }
 
+    //更新ActionMode的title
     private void toggleItemView(FileWrapper fileWrapper, int adapterPosition, boolean selected) {
         File file = fileWrapper.file;
         fileWrapper.selected = selected;
@@ -267,7 +283,7 @@ public class FileSystemActivity extends BaseActivity {
         mAdapter.notifyItemChanged(adapterPosition);
         mActionModeCallback.updateSelectedItemCount(mSelectedFiles.size());
     }
-
+    //清除被选择的文件夹
     private void clearSelections() {
         boolean needsRefresh = mSelectedFiles.size() > 0;
         mSelectedFiles.clear();

@@ -222,6 +222,8 @@ public class FolderFragment extends BaseFragment implements FolderContract.View,
     public void onFolderDeleted(Folder folder) {
         mAdapter.getData().remove(mDeleteIndex);
         mAdapter.notifyItemRemoved(mDeleteIndex);
+        //ToDo
+       // mAdapter.notifyDataSetChanged();
         mAdapter.updateFooterView();
     }
 

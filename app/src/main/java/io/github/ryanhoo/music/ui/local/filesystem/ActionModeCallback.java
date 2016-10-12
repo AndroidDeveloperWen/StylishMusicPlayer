@@ -20,6 +20,7 @@ import io.github.ryanhoo.music.utils.ViewUtils;
  * Date: 9/4/16
  * Time: 5:40 PM
  * Desc: ActionModeCallback
+ * 使用ActionMode实现Menu的功能
  */
 public class ActionModeCallback implements ActionMode.Callback {
 
