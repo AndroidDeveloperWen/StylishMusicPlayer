@@ -118,7 +118,19 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener {
         boolean hasLast = mPlayList.hasLast();
         if (hasLast) {
             Song last = mPlayList.last();
-            play();
+          //  play();
+            //修复无法播放上一首的Bug
+            try {
+                mPlayer.reset();
+                mPlayer.setDataSource(last.getPath());
+                mPlayer.prepare();
+                mPlayer.start();
+                notifyPlayStatusChanged(true);
+            } catch (IOException e) {
+                Log.e(TAG, "play last: ", e);
+                notifyPlayStatusChanged(false);
+                return false;
+            }
             notifyPlayLast(last);
             return true;
         }
@@ -131,7 +143,19 @@ public class Player implements IPlayback, MediaPlayer.OnCompletionListener {
         boolean hasNext = mPlayList.hasNext(false);
         if (hasNext) {
             Song next = mPlayList.next();
-            play();
+           // play();
+            //修复无法播放下一首的Bug
+            try {
+                mPlayer.reset();
+                mPlayer.setDataSource(next.getPath());
+                mPlayer.prepare();
+                mPlayer.start();
+                notifyPlayStatusChanged(true);
+            } catch (IOException e) {
+                Log.e(TAG, "play next: ", e);
+                notifyPlayStatusChanged(false);
+                return false;
+            }
             notifyPlayNext(next);
             return true;
         }

@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -123,11 +124,13 @@ public class FileSystemActivity extends BaseActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.menu_item_done) {
-            AddFolderEvent event = new AddFolderEvent(mFileParent);
-            RxBus.getInstance().post(event);
-            finish();
-        }
+        //修改了未选择文件夹，点击✔️仍然可以建立新的Folder的Bug
+//        if (item.getItemId() == R.id.menu_item_done) {
+//            AddFolderEvent event = new AddFolderEvent(mFileParent);
+//            RxBus.getInstance().post(event);
+//            finish();
+//        }
+        Toast.makeText(this,"No Files Selected",Toast.LENGTH_SHORT).show();
         return super.onOptionsItemSelected(item);
     }
 
