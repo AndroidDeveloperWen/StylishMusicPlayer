@@ -30,7 +30,6 @@ Thanks to these projects and libraries:
 
 - [RxJava](https://github.com/ReactiveX/RxJava)
 - [RxAndroid](https://github.com/ReactiveX/RxAndroid)
-- [Retrofit](https://github.com/square/retrofit)
 - [Butter Knife](https://github.com/JakeWharton/butterknife)
 - [Calligraphy](https://github.com/chrisjenx/Calligraphy)
 - [LiteOrm](https://github.com/litesuits/android-lite-orm)
