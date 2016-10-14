@@ -11,7 +11,7 @@
 
 ## 模式分析
 典型的MVP模式，view通过中间层presenter，获取model数据，然后修改View。在recyleview的adapter中使用回调，在fragment中具体实现，同时将itemView解耦出来，adapter使用抽象父类对footView进行设置，两者皆在具体的adapter中实现。
-![PlayListFragment](https://github.com/JerryMissTom/StylishMusicPlayer/blob/develop/materials/MusicPlayer%20(1).png)
+![PlayListFragment](https://github.com/JerryMissTom/StylishMusicPlayer/blob/develop/materials/MusicPlayer.png)
 ![PlayListDetailsActivity](https://github.com/JerryMissTom/StylishMusicPlayer/blob/develop/materials/PlayListDetailActivity.png)
 
 
